@@ -52,8 +52,18 @@ const HistoryPage: React.FC = () => {
   const fetchExpenses = async () => {
     try {
       setLoading(true);
+      //const data = await getExpenses(selectedYear, selectedMonth);
+      //setExpenses(data);
+// Sort expenses by date in descending order (assuming expenseDate is a string in ISO format)
       const data = await getExpenses(selectedYear, selectedMonth);
-      setExpenses(data);
+
+const sortedData = [...data].sort(
+  (a, b) =>
+    new Date(b.expenseDate).getTime() -
+    new Date(a.expenseDate).getTime()
+);
+
+setExpenses(sortedData);
     } catch (error) {
       console.error("Error fetching expenses:", error);
     } finally {

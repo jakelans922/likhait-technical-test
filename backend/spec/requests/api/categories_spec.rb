@@ -22,4 +22,19 @@ RSpec.describe "Api::Categories", type: :request do
       expect(json.map { |c| c["name"] }).to eq([ "Food", "Supplies", "Transport" ])
     end
   end
+
+  describe "POST /api/categories" do
+    it "creates a new category and returns it" do
+      post "/api/categories", params: {
+        category: {
+          name: "Utilities"
+        }
+      }
+
+      expect(response).to have_http_status(:created)
+      json = JSON.parse(response.body)
+      expect(json["name"]).to eq("Utilities")
+      expect(Category.find_by(name: "Utilities")).to be_present
+    end
+  end
 end

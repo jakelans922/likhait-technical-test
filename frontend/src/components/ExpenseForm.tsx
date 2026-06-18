@@ -82,6 +82,7 @@ export function ExpenseForm({
       <TextField
         label="Date"
         type="date"
+        max={new Date().toISOString().split("T")[0]}
         value={formData.date}
         onChange={(e) => handleChange("date", e.target.value)}
         error={errors.date}
